@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main{
-	private final int MAX_CAP = 25;
+	private final int MAX_CAP = 50;
 	private Jugador numbers[];
 	
 	public Main() {
@@ -15,7 +15,9 @@ public class Main{
 	
 	public static Comparator<Jugador> byIdAsc = (Jugador j1, Jugador j2) -> j1.getId() - j2.getId();
 	public static Comparator<Jugador> byIdDesc = (Jugador j1, Jugador j2) -> j2.getId() - j1.getId();
-	
+	public static Comparator<Jugador> byRatingAsc = (Jugador j1, Jugador j2) -> j1.getRating() - j2.getRating();
+    public static Comparator<Jugador> byRatingDesc = (Jugador j1, Jugador j2) -> j2.getRating() - j1.getRating(); 
+        
 	private double average(){ 
 		return Arrays.asList(numbers).stream().mapToInt(j -> j.getRating()).average().getAsDouble();
 	}
@@ -23,18 +25,27 @@ public class Main{
 	public void fillArray(){
 		for (int i = 0; i < numbers.length; i++) {
 			this.numbers[i] = new Jugador(ThreadLocalRandom.current().nextInt(0, Math.max(MAX_CAP - 45, 45)),
-					ThreadLocalRandom.current().nextInt(1800, 2950));
+				ThreadLocalRandom.current().nextInt(1600, 2950));
 		}	
 	}
 	
-	public void sortAsc(){
+	public void sortIdAsc(){
 		Arrays.sort(numbers, Main.byIdAsc);
 	}
 	
-	public void sortDesc(){
+	public void sortIdDesc(){
 		Arrays.sort(numbers, Main.byIdDesc);
 	}
 	
+        public void sortRatingAsc(){
+		Arrays.sort(numbers, Main.byRatingAsc);
+	}
+	
+	public void sortRatingDesc(){
+		Arrays.sort(numbers, Main.byRatingDesc);
+	}
+        
+    @Override
 	public String toString(){
 		String string = "";
 		
@@ -48,12 +59,24 @@ public class Main{
 	}
 
 	public static void main(String[] args) {
+        	System.out.println("=====================Inicio del Main=======================");
 		Main m = new Main();
+        	System.out.println("=====================Impresión inicial de datos=======================");
 		m.print();
-		m.sortAsc();
+		m.sortIdAsc();
+        	System.out.println("=====================Datos ordenados ascendentemente por ID=======================");
 		m.print();
-		m.sortDesc();
+        	System.out.println("=====================Datos ordenados descendentemente por ID=======================");
+		m.sortIdDesc();
 		m.print();
+        m.sortRatingAsc();
+        	System.out.println("=====================Datos ordenados ascendentemente por rating=======================");
+		m.print();
+        	System.out.println("=====================Datos ordenados descendentemente por rating=======================");
+		m.sortRatingDesc();
+		m.print();
+            System.out.println("=====================Calculo del rating promedio=======================");
 		System.out.println("Rating average is = " + m.average());
+            System.out.println("=====================Fin del Main=======================");
 	}
 }
