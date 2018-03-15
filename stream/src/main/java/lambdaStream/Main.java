@@ -1,11 +1,11 @@
-package lambda;
+package lambdaStream;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main{
-	private final int MAX_CAP = 15;
+	private final int MAX_CAP = 25;
 	private Jugador numbers[];
 	
 	public Main() {
@@ -16,9 +16,14 @@ public class Main{
 	public static Comparator<Jugador> byIdAsc = (Jugador j1, Jugador j2) -> j1.getId() - j2.getId();
 	public static Comparator<Jugador> byIdDesc = (Jugador j1, Jugador j2) -> j2.getId() - j1.getId();
 	
+	private double average(){ 
+		return Arrays.asList(numbers).stream().mapToInt(j -> j.getRating()).average().getAsDouble();
+	}
+	
 	public void fillArray(){
 		for (int i = 0; i < numbers.length; i++) {
-			this.numbers[i] = new Jugador(ThreadLocalRandom.current().nextInt(0, Math.max(MAX_CAP - 45, 45)));
+			this.numbers[i] = new Jugador(ThreadLocalRandom.current().nextInt(0, Math.max(MAX_CAP - 45, 45)),
+					ThreadLocalRandom.current().nextInt(1800, 2950));
 		}	
 	}
 	
@@ -49,5 +54,6 @@ public class Main{
 		m.print();
 		m.sortDesc();
 		m.print();
+		System.out.println("Rating average is = " + m.average());
 	}
 }
