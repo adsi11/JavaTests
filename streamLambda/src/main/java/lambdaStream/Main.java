@@ -5,11 +5,12 @@ import java.util.Comparator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main{
-	private final int MAX_CAP = 50;
 	private Jugador numbers[];
+	private int cap;
 	
-	public Main() {
-		this.numbers = new Jugador[MAX_CAP];
+	public Main(int cap) {
+		this.numbers = new Jugador[cap];
+		this.cap = cap;
 		this.fillArray();
 	}
 	
@@ -18,13 +19,13 @@ public class Main{
 	public static Comparator<Jugador> byRatingAsc = (Jugador j1, Jugador j2) -> j1.getRating() - j2.getRating();
     public static Comparator<Jugador> byRatingDesc = (Jugador j1, Jugador j2) -> j2.getRating() - j1.getRating(); 
         
-	private double average(){ 
+	public double average(){ 
 		return Arrays.asList(numbers).stream().mapToInt(j -> j.getRating()).average().getAsDouble();
 	}
 	
 	public void fillArray(){
 		for (int i = 0; i < numbers.length; i++) {
-			this.numbers[i] = new Jugador(ThreadLocalRandom.current().nextInt(0, Math.max(MAX_CAP - 45, 45)),
+			this.numbers[i] = new Jugador(ThreadLocalRandom.current().nextInt(0, Math.max(this.cap - 45, 45)),
 				ThreadLocalRandom.current().nextInt(1600, 2950));
 		}	
 	}
@@ -63,8 +64,10 @@ public class Main{
 	}
 
 	public static void main(String[] args) {
+		int totalJugadores = 50;
+		
         	System.out.println("=====================Inicio del Main=======================");
-		Main m = new Main();
+		Main m = new Main(totalJugadores);
         	System.out.println("=====================Impresión inicial de datos=======================");
 		m.print();
 		m.sortIdAsc();
