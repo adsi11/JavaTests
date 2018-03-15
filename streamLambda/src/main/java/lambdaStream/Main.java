@@ -44,8 +44,12 @@ public class Main{
 	public void sortRatingDesc(){
 		Arrays.sort(numbers, Main.byRatingDesc);
 	}
-        
-    @Override
+    
+    public Jugador[] getNumbers() {
+		return numbers;
+	}
+
+	@Override
 	public String toString(){
 		String string = "";
 		
@@ -75,8 +79,8 @@ public class Main{
         	System.out.println("=====================Datos ordenados descendentemente por rating=======================");
 		m.sortRatingDesc();
 		m.print();
-            System.out.println("=====================Calculo del rating promedio=======================");
+        System.out.println("=====================Calculo del rating promedio=======================");
 		System.out.println("Rating average is = " + m.average());
-            System.out.println("=====================Fin del Main=======================");
+        System.out.println("=====================Fin del Main=======================");
 	}
 }
